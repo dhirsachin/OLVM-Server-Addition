@@ -1,0 +1,107 @@
+function Initialize-OlvmServerAdditionState {
+    [CmdletBinding()]
+    param()
+
+$script:ToolName = 'OLVM Server Addition'
+$script:ToolVersion = '2026.09.04.8'
+# Use one canonical product identity for the audit and concurrency locations.
+$script:StorageName = $script:ToolName
+$script:LaunchScriptPath = ''
+$script:Window = $null
+$script:ShowSelectedDetailsHandler = $null
+$script:InvalidatePreviewHandler = $null
+$script:PowerChoiceChangedHandler = $null
+# Canonical shared Validation/Build snapshots. The legacy names remain
+# synchronized compatibility aliases for callers that predate modularization.
+$script:ValidationRecords = [object[]]@()
+$script:BuildContexts = $null
+$script:Record = $script:ValidationRecords
+$script:ProvisionContext = $script:BuildContexts
+$script:PresentationPorts = @{}
+$script:RunId = [guid]::NewGuid().ToString('N')
+$script:MaximumBatchSize = 50
+$script:AdBindingVerificationAttempts = 2
+$script:AdBindingVerificationDelaySeconds = 3
+$script:MaximumCsvImportBytes = 1MB
+$script:MaximumXlsxImportBytes = 10MB
+$script:MaximumXlsxEntryCount = 512
+$script:MaximumXlsxXmlCharacters = 20MB
+$script:MaximumLogMessageCharacters = 8192
+$script:MaximumOuBrowseResults = 50000
+$script:DirectorySearchTimeoutSeconds = 120
+$script:LogWriter = $null
+$script:LogPath = $null
+$script:LogLineFormat = '{0,-19} | {1,-7} | {2,-28} | {3,-15} | {4}'
+$script:AuditTrailHealthy = $true
+$script:RecoveryLogFallbackState = $null
+$script:GuiDisplayed = $false
+$script:IsOperationRunning = $false
+$script:CurrentOperationName = ''
+$script:BusyCloseAttemptLogged = $false
+$script:OperationStopwatch = New-Object System.Diagnostics.Stopwatch
+$script:ValidationAttemptCount = [long]0
+$script:ResponsiveSettingsMode = $null
+$script:ResponsiveDestinationMode = $null
+$script:ResponsiveDensityMode = $null
+$script:ResponsiveWorkAreaSignature = $null
+$script:IsApplyingResponsiveBounds = $false
+$script:ResponsiveWarningLogged = $false
+$script:OlvmVmRouteCache = @{}
+$script:OlvmKnownManagers = New-Object 'System.Collections.Generic.List[string]'
+$script:OlvmSessionManagers = New-Object 'System.Collections.Generic.List[string]'
+$script:SelectedPvsImage = $null
+$script:IsRefreshingPvsImageChoices = $false
+$script:IsPvsImageLoadPending = $false
+$script:PvsImageLoadGeneration = [long]0
+$script:PvsImageLoadRequest = $null
+$script:PvsImageSelectedLoadStartedUtc = $null
+$script:PvsImageSelectedLoadTimeoutSeconds = 120
+$script:PvsImageSelectedLoadTimeoutReported = $false
+$script:PvsImageLoadPowerShell = $null
+$script:PvsImageLoadRunspace = $null
+$script:PvsImageLoadAsyncResult = $null
+$script:PvsImageLoadPollTimer = $null
+$script:IsPvsImageCacheWarmupActive = $false
+$script:PvsImageWarmupState = $null
+$script:PvsImageWarmupResultQueue = $null
+$script:PvsImageWarmupRequests = [object[]]@()
+$script:PvsImageWarmupTerminalEnvelope = $null
+$script:PvsImageWarmupTerminalError = ''
+$script:PvsImageLoadStopAsyncResult = $null
+$script:IsPvsImageWorkerQuiescing = $false
+$script:PvsImageDeferredOperation = ''
+$script:PvsImageDeferredCreateWasEnabled = $false
+$script:PvsImageQuiesceStartedUtc = $null
+$script:PvsImageQuiesceTimeoutSeconds = 30
+$script:PvsImageQuiesceTimeoutReported = $false
+$script:PvsImageRestartPriorityRequest = $null
+$script:IsCompletingPvsImageBackgroundLoad = $false
+$script:PvsImageChoiceErrors = @{}
+$script:StartupSplash = $null
+$script:IsRefreshingOuChoices = $false
+$script:IsResettingGui = $false
+$script:IsResettingAuditSession = $false
+$script:IsCompletedRunReviewMode = $false
+$script:PvsStoreChoicesCache = @{}
+$script:PvsStoreChoiceErrors = @{}
+$script:PvsImageChoicesCache = @{}
+$script:OuChoicesCache = @{}
+$script:OuChoiceView = $null
+$script:OuSearchText = ''
+$script:OuSearchHandlerAttached = $false
+$script:OuEditableTextBox = $null
+$script:ApplicationMutex = $null
+$script:ApplicationMutexOwned = $false
+$script:ApplicationLockMetadataPath = $null
+$script:ApplicationLockMetadataWarning = ''
+$script:ApplicationLockWasAbandoned = $false
+$script:ActiveFarmBuildLock = $null
+$script:RebootDayOrder = [string[]]@('M','T','W','Th','F','S','Su')
+$script:PvsPersonalityBulkChunkSize = 200
+$script:PowerWaveSize = 5
+$script:PowerPollSeconds = 10
+$script:PowerTimeoutSeconds = 300
+$script:PowerWaveDelaySeconds = 30
+$script:OlvmAccessInitialized = $false
+
+}
